@@ -1,0 +1,43 @@
+.header {
+  padding: 30px 100px 20px 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  ul {
+    display: flex;
+    list-style: none;
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: uppercase;
+      li {
+        margin-right: 30px;
+        &:last-child {
+          margin: 0;
+        }
+        a {
+          color: #1D1F22;
+          text-decoration: none;
+          transition: 0.5s ease;
+
+          &:hover {
+            color: #5ECE7B;
+            padding-bottom: 30px;
+            border-bottom: 2px solid  #5ECE7B;
+            transition: 0.5s ease;
+          }
+        }
+      }
+  }
+
+  .options {
+    display: flex;
+    align-items: center;
+    img:first-child {
+      margin-right: 10px;
+    }
+    img:nth-child(2) {
+      margin-right: 20px;
+    }
+  }
+}
