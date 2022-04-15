@@ -1,26 +1,48 @@
 import { Component } from "react";
 import styles from "./Header.module.scss";
 import logo from "../../assets/images/a-logo.svg";
-import currency from "../../assets/images/dollar.svg";
 import arrow from "../../assets/images/arrow-down.svg";
 import cart from "../../assets/images/cart.svg";
 import client from "../../apollo";
-import { CATEGORIES_QUERY } from "../../graphql/categories";
+import { GET_CATEGORIES, GET_CURRENCIES } from "../../graphql/queries";
+import { SelectCurrency } from "../SelectCurrency/SelectCurrency";
 
 export class Header extends Component {
   constructor() {
     super();
+    this.currencies = [];
     this.state = {
+      currentCurrency: "",
+      selectCurrencyVisible: false,
       categories: [],
     };
   }
   componentDidMount() {
-    client
-      .query({ query: CATEGORIES_QUERY })
-      .then(({ data }) =>
-        this.setState(this.setState({ categories: data.categories }))
-      );
+    const getData = async () => {
+      await client
+        .query({ query: GET_CATEGORIES })
+        .then(({ data }) => this.setState({ categories: data.categories }));
+      await client
+        .query({ query: GET_CURRENCIES })
+        .then(({ data }) => (this.currencies = data.currencies));
+
+      this.setState({ currentCurrency: this.currencies[0].symbol });
+    };
+    getData();
   }
+
+  showSelect = () => {
+    this.setState((prev) => ({
+      selectCurrencyVisible: !prev.selectCurrencyVisible,
+    }));
+  };
+
+  changeCurrentCurrency = (currency) => {
+    this.setState({ currentCurrency: currency });
+    this.setState((prev) => ({
+      selectCurrencyVisible: !prev.selectCurrencyVisible,
+    }));
+  };
 
   render() {
     return (
@@ -36,10 +58,16 @@ export class Header extends Component {
           <img src={logo} alt="logo" />
         </div>
         <div className={styles.options}>
-          <img src={currency} alt="currency" />
-          <img src={arrow} alt="arrow" />
+          <p>{this.state.currentCurrency}</p>
+          <img onClick={this.showSelect} src={arrow} alt="arrow" />
           <img src={cart} alt="cart" />
         </div>
+        {this.state.selectCurrencyVisible && (
+          <SelectCurrency
+            currencies={this.currencies}
+            changeCurrentCurrency={this.changeCurrentCurrency}
+          />
+        )}
       </div>
     );
   }

@@ -34,11 +34,18 @@
   .options {
     display: flex;
     align-items: center;
+    font-size: 18px;
+
+    p {
+      width: 20px;
+    }
+
     img:first-child {
       margin-right: 10px;
     }
     img:nth-child(2) {
       margin-right: 20px;
+      cursor: pointer;
     }
   }
 }
