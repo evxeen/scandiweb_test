@@ -4,11 +4,26 @@ import client from "./apollo";
 import { Header } from "./components/Header/Header";
 import styles from "./App.module.scss";
 import { Card } from "./components/Card/Card";
+import { GET_PRODUCTS_BY_ALL } from "./graphql/queries";
 
 export class App extends Component {
   constructor() {
     super();
+    this.state = {
+      products: [],
+    };
   }
+
+  componentDidMount() {
+    client
+      .query({ query: GET_PRODUCTS_BY_ALL })
+      .then(({ data }) => this.setState({ products: data.category.products }));
+
+    setTimeout(() => {
+      // console.log(this.state);
+    }, 1000);
+  }
+
   render() {
     return (
       <ApolloProvider client={client}>
@@ -16,12 +31,9 @@ export class App extends Component {
           <Header />
           <h1>Category name</h1>
           <div className={styles.products}>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {this.state.products.map((product) => (
+              <Card key={product.id} data={product} />
+            ))}
           </div>
         </div>
       </ApolloProvider>
