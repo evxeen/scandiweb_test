@@ -1,0 +1,25 @@
+.select {
+  position: absolute;
+  width: 114px;
+  height: 169px;
+  left: 1248px;
+  top: 80px;
+  box-shadow: 1px 1px 5px #1D1F22;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-size: 20px;
+
+  p {
+    cursor: pointer;
+    padding-left: 20px;
+    transition: 0.3s ease;
+
+    &:hover {
+      background-color: #d0cece;
+      transition: 0.3s ease;
+    }
+  }
+
+  background: #FFFFFF;
+}

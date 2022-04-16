@@ -1,2 +1,9 @@
 .wrapper {
+  margin: 0 100px 0 100px;
+}
+
+.products {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
