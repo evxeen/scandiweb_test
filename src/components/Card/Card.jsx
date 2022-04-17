@@ -5,7 +5,6 @@ import sort from "../../assets/images/Image.jpg";
 export class Card extends Component {
   constructor(props) {
     super();
-    console.log(props);
   }
 
   render() {

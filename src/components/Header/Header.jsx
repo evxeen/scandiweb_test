@@ -8,20 +8,16 @@ import { GET_CATEGORIES, GET_CURRENCIES } from "../../graphql/queries";
 import { SelectCurrency } from "../SelectCurrency/SelectCurrency";
 
 export class Header extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.currencies = [];
     this.state = {
       currentCurrency: "",
       selectCurrencyVisible: false,
-      categories: [],
     };
   }
   componentDidMount() {
     const getData = async () => {
-      await client
-        .query({ query: GET_CATEGORIES })
-        .then(({ data }) => this.setState({ categories: data.categories }));
       await client
         .query({ query: GET_CURRENCIES })
         .then(({ data }) => (this.currencies = data.currencies));
@@ -30,6 +26,10 @@ export class Header extends Component {
     };
     getData();
   }
+
+  changeCategoryHandler = (category) => {
+    this.props.changeCategory(category);
+  };
 
   showSelect = () => {
     this.setState((prev) => ({
@@ -48,9 +48,19 @@ export class Header extends Component {
     return (
       <div className={styles.header}>
         <ul>
-          {this.state.categories.map((el) => (
+          {this.props.categories.map((el) => (
             <li key={el.name}>
-              <a href="#">{el.name}</a>
+              <a
+                onClick={() => this.changeCategoryHandler(el.name)}
+                href="#"
+                className={`${styles.link} ${
+                  this.props.currentCategory === el.name
+                    ? `${styles.active}`
+                    : ""
+                }`}
+              >
+                {el.name}
+              </a>
             </li>
           ))}
         </ul>

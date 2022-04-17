@@ -16,17 +16,24 @@
         &:last-child {
           margin: 0;
         }
-        a {
+
+        .link {
           color: #1D1F22;
           text-decoration: none;
           transition: 0.5s ease;
 
           &:hover {
             color: #5ECE7B;
-            padding-bottom: 30px;
+            padding-bottom: 15px;
             border-bottom: 2px solid  #5ECE7B;
             transition: 0.5s ease;
           }
+
+          &.active {
+            color: #5ECE7B;
+            padding-bottom: 30px;
+            border-bottom: 2px solid  #5ECE7B;
+        }
         }
       }
   }
